@@ -37,7 +37,8 @@ class contentApp (webapp.webApp):
             if recurso == "/":
                 httpCode = "200 OK"
                 htmlBody = "<html><body>" + formulario\
-                + "" + str(self.urls_Acotadas) + "</body></html>"
+                           + "<p>" + str(self.urls_Acotadas)\
+                           + "</p></body></html>"
             else:
                 recurso = int(recurso[1:])
                 if recurso in self.sec_urls:
@@ -92,4 +93,5 @@ if __name__ == "__main__":
     try:
         testWebApp = contentApp("localhost", 1234)
     except KeyboardInterrupt:
+        print ""
         print "Finalizando aplicación"
