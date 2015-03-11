@@ -40,14 +40,22 @@ class contentApp (webapp.webApp):
                            + "<p>" + str(self.urls_Acotadas)\
                            + "</p></body></html>"
             else:
-                recurso = int(recurso[1:])
-                if recurso in self.sec_urls:
-                    httpCode = "300 Redirect"
-                    htmlBody = "<html><body><meta http-equiv='refresh'"\
-                               + "content='1 url="\
-                               + self.sec_urls[recurso] + "'>"\
-                               + "</p>" + "</body></html>"
-                else:
+
+                try:
+                    recurso = int(recurso[1:])
+                
+                    if recurso in self.sec_urls:
+                        httpCode = "300 Redirect"
+                        htmlBody = "<html><body><meta http-equiv='refresh'"\
+                                   + "content='1 url="\
+                                   + self.sec_urls[recurso] + "'>"\
+                                   + "</p>" + "</body></html>"
+                    else:
+                        httpCode = "404 Not Found"
+                        htmlBody = "<html><body>"\
+                                   + "Error: Recurso no disponible"\
+                                   + "</body></html>"
+                except ValueError:
                     httpCode = "404 Not Found"
                     htmlBody = "<html><body>"\
                                + "Error: Recurso no disponible"\
@@ -63,9 +71,14 @@ class contentApp (webapp.webApp):
                 return(httpCode, htmlBody)
             elif cuerpo.find("http") == -1:
                 cuerpo = "http://" + cuerpo
+                while cuerpo.find("%2F") != -1:
+                   cuerpo = cuerpo.replace("%2F", "/")
             else:
+                
                 cuerpo = cuerpo.split("%3A%2F%2F")[0]\
                     + "://" + cuerpo.split("%3A%2F%2F")[1]
+                while cuerpo.find("%2F") != -1:
+                    cuerpo = cuerpo.replace("%2F", "/")
 
             if cuerpo in self.urls_Acotadas:
                 secuencia = self.urls_Acotadas[cuerpo]
