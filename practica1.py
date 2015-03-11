@@ -43,7 +43,6 @@ class contentApp (webapp.webApp):
 
                 try:
                     recurso = int(recurso[1:])
-                
                     if recurso in self.sec_urls:
                         httpCode = "300 Redirect"
                         htmlBody = "<html><body><meta http-equiv='refresh'"\
@@ -72,9 +71,8 @@ class contentApp (webapp.webApp):
             elif cuerpo.find("http") == -1:
                 cuerpo = "http://" + cuerpo
                 while cuerpo.find("%2F") != -1:
-                   cuerpo = cuerpo.replace("%2F", "/")
+                    cuerpo = cuerpo.replace("%2F", "/")
             else:
-                
                 cuerpo = cuerpo.split("%3A%2F%2F")[0]\
                     + "://" + cuerpo.split("%3A%2F%2F")[1]
                 while cuerpo.find("%2F") != -1:
